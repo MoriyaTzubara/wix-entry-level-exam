@@ -1,5 +1,6 @@
 :root {
 	--text-color: black;
+	--link-color: #0275d8;
 	--title-color: #A7A633;
 	--background-color: #e1e195;
 }
@@ -57,7 +58,7 @@ body {
 	}
 
 	a {
-		color: var(--text-color);
+		color: var(--link-color);
 		cursor: pointer;
 		font-weight: 500;
 		font-size: 12px;
@@ -70,7 +71,7 @@ body {
 
 		.ticket {
 			overflow: hidden;
-			height: 150px;
+			height: 160px;
 			width: calc(50% - 70px);
 			margin: 15px;
 			display: inline-block;
@@ -84,21 +85,39 @@ body {
 			}
 
 			.title {
-				margin: 15px 0;
-				font-size: 16px;
+				margin: 10px 0;
+				font-size: 15px;
 				font-weight: 400;
 				font-style: normal;
 				color: var(--title-color);
+			}
+
+			.content{
+				color: var(--text-color);
+				font-size: 13px;
+				font-weight: 300;
+
+				overflow: hidden;
+				height: 55px;
+				display: block;
+				position: relative;
+				margin: 0px;
+			}
+			
+			.see-more{
+				position: relative;
+				top: 0px;
 			}
 
 			footer {
 
 				display: flex;
 				justify-content: space-between;
-
+				position: absolute;
+				bottom: 0;
 				.meta-data {
 					color: var(--text-color);
-					font-size: 12px;
+					font-size: 10px;
 					margin: 10px 0;
 					flex-shrink: 0;
 				}
