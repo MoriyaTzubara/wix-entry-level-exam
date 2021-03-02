@@ -70,8 +70,8 @@ body {
 		padding: 0;
 
 		.ticket {
-			overflow: hidden;
-			height: 160px;
+			height: max-content;
+			min-height: 150px;
 			width: calc(50% - 70px);
 			margin: 15px;
 			display: inline-block;
@@ -86,13 +86,15 @@ body {
 
 			.title {
 				margin: 10px 0;
+				margin-right: 40px;
 				font-size: 15px;
 				font-weight: 400;
 				font-style: normal;
 				color: var(--title-color);
+				overflow: auto;
 			}
 
-			.content{
+			.content-less{
 				color: var(--text-color);
 				font-size: 13px;
 				font-weight: 300;
@@ -103,17 +105,34 @@ body {
 				position: relative;
 				margin: 0px;
 			}
+			.content-more{
+				color: var(--text-color);
+				font-size: 13px;
+				font-weight: 300;
+
+				overflow: visible;
+				height: max-content;
+				display: block;
+				position: relative;
+				margin: 0px;
+			}
 			
 			.see-more{
 				position: relative;
 				top: 0px;
 			}
 
+			.pin{
+				position: absolute;
+				right: 15px;
+				top: 15px;
+			}
+
 			footer {
 
 				display: flex;
 				justify-content: space-between;
-				position: absolute;
+				position: relative;
 				bottom: 0;
 				.meta-data {
 					color: var(--text-color);
