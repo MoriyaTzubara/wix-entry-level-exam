@@ -6,6 +6,7 @@ import { type } from 'os';
 export type AppState = {
 	tickets?: TicketState[],
 	search: string;
+	darkMode: boolean
 }
 
 export type TicketState = {
@@ -34,7 +35,7 @@ export class TicketView extends Component<Props>{
 		const ticket = props.ticket;
 		const contentClass = props.seeMore ? 'content-more' : 'content-less';
 		const LessOrMore = props.seeMore ? 'less' : 'more';
-		const pinOrUnpin = props.pin ? 'unpin' : 'pin';
+		const pinOrUnpin = props.pin ? '📌' : 'pin';
 
 		return(
 			<li key={ticket.id} className='ticket'>
@@ -55,7 +56,8 @@ export class TicketView extends Component<Props>{
 export class App extends React.PureComponent<{}, AppState> {
 
 	state: AppState = {
-		search: ''
+		search: '',
+		darkMode: false
 	}
 
 	searchDebounce: any = null;
@@ -114,7 +116,6 @@ export class App extends React.PureComponent<{}, AppState> {
 		let tickets = this.state.tickets.slice();
 		tickets[i].seeMore = !tickets[i].seeMore;
 		this.setState({
-			search: this.state.search,
 			tickets: tickets
 		});
 	}
@@ -126,14 +127,23 @@ export class App extends React.PureComponent<{}, AppState> {
 		tickets[i].pin = tickets[i].pin == 0 ? tickets[0].pin - 1 : 0;
 		tickets = tickets.sort((a) => (a.pin))
 		this.setState({
-			search: this.state.search,
 			tickets: tickets
 		});		
+	}
+
+	onClickMode = async () => {
+		const darkMode = !this.state.darkMode;
+		this.setState({
+			darkMode: darkMode,
+		});
 	}
 	
 	render() {	
 		const {tickets} = this.state;
-		return (<main>
+		const mode = this.state.darkMode ? '🌞 light' : '🌜 dark' ;
+		const currTheme =  this.state.darkMode ? 'dark' : 'light';
+		return (<main className={currTheme + '-theme'}>
+					<a className='mode-btn' onClick={this.onClickMode} >{mode}</a>
 					<h1>Tickets List</h1>
 					<header>
 						<input type="search" placeholder="Search..." onChange={(e) => this.onSearch(e.target.value)}/>
