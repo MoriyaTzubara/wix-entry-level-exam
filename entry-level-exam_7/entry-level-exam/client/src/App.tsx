@@ -30,11 +30,16 @@ type Props = {
 
 export class TicketView extends Component<Props>{
 
+
+	clone = async () => {
+		alert();
+	}
+
 	render(){
 		const props = this.props.children;
 		const ticket = props.ticket;
 		const contentClass = props.seeMore ? 'content-more' : 'content-less';
-		const LessOrMore = props.seeMore ? 'less' : 'more';
+		const lessOrMore = props.seeMore ? 'less' : 'more';
 		const pinOrUnpin = props.pin ? '📌' : 'pin';
 
 		return(
@@ -43,10 +48,11 @@ export class TicketView extends Component<Props>{
 				<h5 className='title'>{ticket.title}</h5>
 				<div>
 					<p className={contentClass}>{ticket.content}</p>
-					<a className={'see-more'} onClick={() => {props.onClickSeeMore(props.index)}}>{'See ' + LessOrMore}</a>
+					<a className={'see-more'} onClick={() => {props.onClickSeeMore(props.index)}}>{'See ' + lessOrMore}</a>
 				</div>
 				<footer>
 					<div className='meta-data'>By {ticket.userEmail} | { new Date(ticket.creationTime).toLocaleString()}</div>
+					<a className='clone' onClick={this.clone}>clone</a>
 				</footer>
 			</li>
 		);
@@ -140,7 +146,7 @@ export class App extends React.PureComponent<{}, AppState> {
 	
 	render() {	
 		const {tickets} = this.state;
-		const mode = this.state.darkMode ? '🌞 light' : '🌜 dark' ;
+		const mode = this.state.darkMode ? '🌞 light mode' : '🌜 dark mode' ;
 		const currTheme =  this.state.darkMode ? 'dark' : 'light';
 		return (<main className={currTheme + '-theme'}>
 					<a className='mode-btn' onClick={this.onClickMode} >{mode}</a>
