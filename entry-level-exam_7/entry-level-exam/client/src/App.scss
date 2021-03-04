@@ -66,7 +66,7 @@ body {
 		}
 	
 		a {
-			color: var(--color7);
+			color: var(--color4);
 			cursor: pointer;
 			font-weight: 500;
 			font-size: 12px;
@@ -142,21 +142,26 @@ body {
 	
 				.pin{
 					position: absolute;
-					right: 15px;
-					top: 15px;
+					right: 10px;
+					top: 10px;
 				}
 	
 				footer {
 	
 					display: flex;
 					justify-content: space-between;
-					position: relative;
-					bottom: 0;
+					bottom: 0px;
 					.meta-data {
 						color: var(--color1);
 						font-size: 10px;
 						margin: 10px 0;
 						flex-shrink: 0;
+					}
+
+					.clone{
+						position: absolute;
+						right: 10px;
+						bottom: 10px;
 					}
 				}
 			}
@@ -297,21 +302,26 @@ body {
 	
 				.pin{
 					position: absolute;
-					right: 15px;
-					top: 15px;
+					right: 10px;
+					top: 10px;
 				}
 	
 				footer {
 	
 					display: flex;
 					justify-content: space-between;
-					position: relative;
 					bottom: 0;
 					.meta-data {
 						color: var(--text-color);
 						font-size: 10px;
 						margin: 10px 0;
 						flex-shrink: 0;
+					}
+
+					.clone{
+						position: absolute;
+						right: 10px;
+						bottom: 10px;
 					}
 				}
 			}
