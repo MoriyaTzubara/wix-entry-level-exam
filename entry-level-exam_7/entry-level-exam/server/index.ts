@@ -31,18 +31,17 @@ app.get(APIPath, (req, res) => {
 
   const paginatedData = tempData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-  res.send(paginatedData);
+  res.send({page: page, tickets: paginatedData});
 });
 
 app.post(APIPath + '/clone', (req, res) => {
-  // clone ticket
   const ticketId = req.body.id;
   const ticket = tempData.find((t:Ticket) => { return t.id == ticketId});
-  if (!ticket)
-    return;
+  if (!ticket) return;
   
+  // Clone the ticket
   const clone:Ticket = JSON.parse(JSON.stringify(ticket))
-    
+  
   idForInitialization += 1;
   clone.id = idForInitialization.toString();
 

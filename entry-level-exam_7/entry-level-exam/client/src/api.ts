@@ -11,7 +11,7 @@ export type Ticket = {
 }
 
 export type ApiClient = {
-    getTickets: (page: number) => Promise<Ticket[]>;
+    getTickets: (page: number) => Promise<{page: number,tickets:Ticket[]}>;
     cloneTicket: (id:string) => Promise<Ticket>;
 }
 

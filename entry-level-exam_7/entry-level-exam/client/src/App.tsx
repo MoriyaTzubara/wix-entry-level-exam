@@ -1,7 +1,6 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component } from 'react';
 import './App.scss';
 import {createApiClient, Ticket} from './api';
-import { type } from 'os';
 
 export type AppState = {
 	tickets?: TicketState[],
@@ -10,6 +9,7 @@ export type AppState = {
 	darkMode: boolean
 }
 
+// State for TicketView component
 export type TicketState = {
 	ticket: Ticket,
 	seeMore: boolean,
@@ -18,6 +18,7 @@ export type TicketState = {
 
 const api = createApiClient();
 
+// Props that App component sent to TicketView component
 type TicketViewProps = {
 	children:{
 		ticket: Ticket,
@@ -66,29 +67,32 @@ export class App extends React.PureComponent<{}, AppState> {
 	searchDebounce: any = null;
 
 	async componentDidMount() {
+		// Get tickets from server
 		this.updateTicketsState();
 	}
 
 	async updateTicketsState(){
+		// Get tickets for this page
+		const res = await api.getTickets(this.state.page);
 		
-		const tickets = await (await api.getTickets(this.state.page)).map((ticket) => {
-			const ticketState : TicketState = {
+		// Convert TIcket to TicketState
+		const tickets = (res.tickets).map((ticket) => {
+			return {
 				ticket: ticket,
 				seeMore: false,
 				pin: 0
 			};
-			return ticketState;
 		});
 
 		this.setState({
-			tickets: tickets
+			tickets: tickets,
+			page: res.page
 		});
 	}
 	
 	renderTickets = (tickets: TicketState[]) => {
 		const filteredTickets = tickets
 			.filter((t) => (t.ticket.title.toLowerCase() + t.ticket.content.toLowerCase()).includes(this.state.search.toLowerCase()));
-
 
 		return (
 		<ul className='tickets'>
@@ -109,7 +113,6 @@ export class App extends React.PureComponent<{}, AppState> {
 	}
 
 	onSearch = async (val: string, newPage?: number) => {
-		
 		clearTimeout(this.searchDebounce);
 
 		this.searchDebounce = setTimeout(async () => {
@@ -134,27 +137,26 @@ export class App extends React.PureComponent<{}, AppState> {
 		} 
 		
 		let tickets = this.state.tickets.slice();
-		tickets.push(clone);
+		tickets.unshift(clone);
 		tickets = tickets.sort((t) => t.pin).slice(0, 20);
+		
 		this.setState({
 			tickets: tickets
 		});
 	}
 
 	onClickSeeMore = async (id: string) => {
-
-		//let tickets = this.state.tickets.slice();
 		const ticket = this.getticketStateById(id);
-		
-		if (!ticket)
-			return;
+		if (!ticket) return;
 		ticket.seeMore = !ticket.seeMore;
+		
 		this.setState({
 			tickets: this.state.tickets ? this.state.tickets.slice() : undefined
 		});
 	}
 
 	onClickRestore = async () => {
+		// Restore tickets form server
 		this.updateTicketsState();
 	}
 
@@ -162,10 +164,10 @@ export class App extends React.PureComponent<{}, AppState> {
 
 		const ticket = this.getticketStateById(id);
 
-		if (!ticket)
-			return;
+		if (!ticket) return;
 
-		ticket.pin = ticket.pin ? 0 : -1; // 0 == unpin && -1 == pin
+		// pin => -1, unpin => 0
+		ticket.pin = ticket.pin ? 0 : -1;
 		
 		this.setState({
 			tickets: this.state.tickets ? this.state.tickets.slice().sort((a) => (a.pin)) : undefined
@@ -174,28 +176,27 @@ export class App extends React.PureComponent<{}, AppState> {
 
 	onClickMode = async () => {
 		const darkMode = !this.state.darkMode;
+		
 		this.setState({
 			darkMode: darkMode,
 		});
 	}
 	
 	onClickChangePage = async (i: number) => {
-		this.setState({
-			page: this.state.page + i
+		await this.setState({
+			page: +this.state.page +i
 		});
 
 		this.updateTicketsState();
 	}
 
-	getticketStateById = (id: string) => {
-		if (!this.state.tickets)
-			return;
-		
+	getticketStateById = (id: string) => {		
 		const tickets = this.state.tickets;
-		const ticket = tickets.find((t) => {
+		if (!tickets) return;
+		
+		return tickets.find((t) => {
 			return t.ticket.id == id
 		});
-		return ticket;
 	}
 
 	render() {	
@@ -210,17 +211,11 @@ export class App extends React.PureComponent<{}, AppState> {
 					<header>
 						<input type="search" placeholder="Search..." onChange={(e) => this.onSearch(e.target.value)}/>
 					</header>
-					{tickets ? 
-						<div className='results'>
-							Showing {tickets.length} results
-							<i> ({numPins} pin tickets) <a onClick={() => {this.updateTicketsState()}}> restore</a></i>
-						</div> 
-					: null }
-						<br/>
+					{tickets ? <div className='results'>Showing {tickets.length} results <i> ({numPins} pin tickets) <a onClick={() => {this.updateTicketsState()}}> restore</a></i></div> : null }
 						<a className='prev-page' onClick={()=>this.onClickChangePage(-1)}>🡠 prev page</a>
-						<a className='next-page'onClick={()=>this.onClickChangePage(1)}>next page 🡢</a>
-						<br/>
-					{tickets ? this.renderTickets(tickets) : <h2>Loading..</h2>}
+						<a className='next-page'onClick={()=>this.onClickChangePage(1)}>next page 🡢</a>	
+						<p className='curr-page'>page {this.state.page}</p>
+					{tickets ? this.renderTickets(tickets) : <h2>Loading...</h2>}
 				</main>)
 	}
 }

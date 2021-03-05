@@ -81,6 +81,10 @@ body {
 			position: absolute;
 			left: 100px;
 		}
+		.curr-page{
+			text-align: center;
+			font-size: 11px;
+		}
 	
 	
 		.mode-btn{
@@ -250,7 +254,11 @@ body {
 			position: absolute;
 			left: 100px;
 		}
-	
+		.curr-page{
+			text-align: center;
+			font-size: 11px;
+		}
+		
 		.mode-btn{
 			color: var(--color1);
 			background-color: var(--color8);
