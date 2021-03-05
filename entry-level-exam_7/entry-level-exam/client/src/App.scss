@@ -66,11 +66,22 @@ body {
 		}
 	
 		a {
-			color: var(--color4);
+			color: var(--color6);
 			cursor: pointer;
 			font-weight: 500;
 			font-size: 12px;
 		}
+		
+		.next-page{
+			position: absolute;
+			right: 100px;
+			margin: 5px;
+		}
+		.prev-page{
+			position: absolute;
+			left: 100px;
+		}
+	
 	
 		.mode-btn{
 			color: white;
@@ -224,10 +235,20 @@ body {
 		}
 	
 		a {
-			color: var(--color7);
+			color: var(--color6);
 			cursor: pointer;
 			font-weight: 500;
 			font-size: 12px;
+		}
+
+		.next-page{
+			position: absolute;
+			right: 100px;
+			margin: 5px;
+		}
+		.prev-page{
+			position: absolute;
+			left: 100px;
 		}
 	
 		.mode-btn{
