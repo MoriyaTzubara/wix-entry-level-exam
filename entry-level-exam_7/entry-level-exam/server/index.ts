@@ -61,5 +61,21 @@ app.post(APIPath + '/delete', (req, res) => {
   res.send();
 });
 
+app.post(APIPath + '/edit', (req, res) => {
+  const ticket = req.body.ticket;
+  const i = tempData.findIndex((t:Ticket) => { return t.id == ticket.id});
+  
+  if (i == -1) return;
+
+  // Edit the ticket
+  tempData[i].title = ticket.title;
+  tempData[i].creationTime = ticket.creationTime;
+  tempData[i].labels = ticket.labels;
+  tempData[i].content = ticket.content;
+  tempData[i].userEmail = ticket.userEmail;
+  
+  res.send(tempData[i]);
+});
+
 app.listen(serverAPIPort);
 console.log('server running', serverAPIPort)

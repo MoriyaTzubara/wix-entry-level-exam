@@ -7,18 +7,41 @@
 	--color6: #9D4EDD;
 	--color7: #E3CCF1;
 	--color8: #F9EDFF;
+	--color9: #f8effd;
 }
 
 body {	
 	margin: 0;
 	
-	.light-theme{
+	input {
+		background: none;
+		border: solid 0.5px;
+	}
+
+	.light-theme {
 		font-family: 'Open Sans', sans-serif;
 		background-color: var(--color8);
 		padding-top: 100px;
 		padding: 50px;	
 		color: var(--color1);
 		min-height: 100vh;
+
+		.title-input {
+			font-size: 15px;
+			width: 90%;
+			height: 30px;
+			font-family: 'Open Sans', sans-serif;
+		}
+		.content-input {
+			background: none;
+			height: 100%;
+			min-height: 150px;
+			width: 100%;
+			font-family: 'Open Sans', sans-serif;
+			color: var(--text-color);
+			font-size: 13px;
+			font-weight: 300;
+		}
 
 		main {
 			max-width: 1000px;
@@ -72,22 +95,22 @@ body {
 			font-size: 12px;
 		}
 		
-		.next-page{
+		.next-page {
 			position: absolute;
 			right: 100px;
 			margin: 5px;
 		}
-		.prev-page{
+		.prev-page {
 			position: absolute;
 			left: 100px;
 		}
-		.curr-page{
+		.curr-page {
 			text-align: center;
 			font-size: 11px;
 		}
 	
 	
-		.mode-btn{
+		.mode-btn {
 			color: white;
 			background-color: var(--color1);
 			padding: 8px 20px 8px 20px;
@@ -120,6 +143,7 @@ body {
 				}
 	
 				.title {
+					cursor: pointer;
 					margin: 10px 0;
 					margin-right: 40px;
 					font-size: 15px;
@@ -129,7 +153,8 @@ body {
 					overflow: auto;
 				}
 	
-				.content-less{
+				.content-less {
+					cursor: pointer;
 					font-size: 13px;
 					font-weight: 300;
 	
@@ -139,7 +164,8 @@ body {
 					position: relative;
 					margin: 0px;
 				}
-				.content-more{
+				.content-more {
+					cursor: pointer;
 					font-size: 13px;
 					font-weight: 300;
 	
@@ -148,24 +174,25 @@ body {
 					display: block;
 					position: relative;
 					margin: 0px;
+					white-space: pre-wrap;
+					overflow-wrap: break-word;
 				}
 				
-				.see-more{
+				.see-more {
 					position: relative;
 					top: 0px;
 				}
 	
-				.pin{
+				.pin {
 					position: absolute;
 					right: 10px;
 					top: 10px;
 				}
 	
 				footer {
-	
-					display: flex;
 					justify-content: space-between;
 					bottom: 0px;
+					
 					.meta-data {
 						color: var(--color1);
 						font-size: 10px;
@@ -173,17 +200,39 @@ body {
 						flex-shrink: 0;
 					}
 
-					.clone{
+					.labels {
+						font-size: 10px;
+						height: 20px;
+						
+						.label {
+							background-color: var(--color7);
+							color: var(--color6);
+							height: 15px;
+							margin: 5px;
+							padding: 2px 7px 2px 7px;
+							display: inline;
+							border-radius: 20px;
+							float: right;
+						}
+					}
+					
+					.clone {
 						position: absolute;
 						right: 10px;
 						bottom: 5px;
 						font-size: medium;
 					}
-					.delete{
+					.delete {
 						position: absolute;
 						right: 40px;
 						bottom: 5px;
 						font-size: large;
+					}
+					.hide {
+						position: absolute;
+						right: 70px;
+						bottom: 5px;
+						font-size: medium;
 					}
 				}
 			}
@@ -191,13 +240,32 @@ body {
 	
 	}
 
-	.dark-theme{
+	.dark-theme {
 		font-family: 'Open Sans', sans-serif;
 		background-color: var(--color1);
 		padding-top: 100px;
 		padding: 50px;	
 		color: var(--color7);
 		min-height: 100vh;
+
+		.title-input {
+			font-size: 15px;
+			width: 90%;
+			height: 30px;
+			color: white;
+			font-family: 'Open Sans', sans-serif;
+		}
+
+		.content-input {
+			background: none;
+			height: 100%;
+			min-height: 150px;
+			width: 100%;
+			font-family: 'Open Sans', sans-serif;
+			color: var(--text-color);
+			font-size: 13px;
+			font-weight: 300;
+		}
 
 		main {
 			max-width: 1000px;
@@ -252,21 +320,21 @@ body {
 			font-size: 12px;
 		}
 
-		.next-page{
+		.next-page {
 			position: absolute;
 			right: 100px;
 			margin: 5px;
 		}
-		.prev-page{
+		.prev-page {
 			position: absolute;
 			left: 100px;
 		}
-		.curr-page{
+		.curr-page {
 			text-align: center;
 			font-size: 11px;
 		}
 		
-		.mode-btn{
+		.mode-btn {
 			color: var(--color1);
 			background-color: var(--color8);
 			padding: 8px 20px 8px 20px;
@@ -299,6 +367,7 @@ body {
 				}
 	
 				.title {
+					cursor: pointer;
 					margin: 10px 0;
 					margin-right: 40px;
 					font-size: 15px;
@@ -308,7 +377,8 @@ body {
 					overflow: auto;
 				}
 	
-				.content-less{
+				.content-less {
+					cursor: pointer;
 					color: var(--text-color);
 					font-size: 13px;
 					font-weight: 300;
@@ -319,52 +389,76 @@ body {
 					position: relative;
 					margin: 0px;
 				}
-				.content-more{
+
+				.content-more {
+					cursor: pointer;
 					color: var(--text-color);
 					font-size: 13px;
 					font-weight: 300;
-	
 					overflow: visible;
 					height: max-content;
 					display: block;
 					position: relative;
 					margin: 0px;
+					white-space: pre-wrap;
+					overflow-wrap: break-word;
 				}
 				
-				.see-more{
+				.see-more {
 					position: relative;
 					top: 0px;
 				}
 	
-				.pin{
+				.pin {
 					position: absolute;
 					right: 10px;
 					top: 10px;
 				}
 	
 				footer {
-	
-					display: flex;
 					justify-content: space-between;
 					bottom: 0;
+					
 					.meta-data {
 						color: var(--text-color);
 						font-size: 10px;
 						margin: 10px 0;
 						flex-shrink: 0;
 					}
+					
+					.labels {
+						font-size: 10px;
+						height: 20px;
+						
+						.label {
+							background-color: var(--color3);
+							color: var(--color6);
+							height: 15px;
+							margin: 5px;
+							padding: 2px 7px 2px 7px;
+							display: inline;
+							border-radius: 20px;
+							float: right;
+						}
+					}
 
-					.clone{
+					.clone {
 						position: absolute;
 						right: 10px;
 						bottom: 5px;
 						font-size: medium;
 					}
-					.delete{
+					.delete {
 						position: absolute;
 						right: 40px;
 						bottom: 5px;
 						font-size: large;
+					}
+					.hide {
+						position: absolute;
+						right: 70px;
+						bottom: 5px;
+						font-size: medium;
 					}
 
 				}

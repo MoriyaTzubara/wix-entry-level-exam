@@ -27,29 +27,78 @@ type TicketViewProps = {
 		onClickPin: Function,
 		onClickSeeMore: Function,
 		onClickClone: Function,
-		onClickDelete: Function
+		onClickDelete: Function,
+		onClickHide: Function
 	}
 }
 
 export class TicketView extends Component<TicketViewProps>{
 
+	state = {
+		editTitle: false,
+		editContent: false,
+	}
+
+	renderLabels = (labels: string[]) => {
+		return (<div className='labels'>
+					{labels.map((label) => {
+							return <div className='label'>{label}</div>;
+						})}
+				</div>);
+	}
+
+	onClickEditTitle = async () => {
+		this.setState({
+			editTitle: true,
+		});
+	}
+	onClickEditContent = async () => {
+		this.setState({
+			editContent: true,
+		});
+	}
+	
+	saveTitle = async (e:any) => {
+		let ticket = this.props.children.ticket;
+		ticket.title = e.target.value;
+		ticket = await api.editTicket(ticket);
+		this.setState({
+			editTitle: false,
+			ticket: ticket
+		});
+	}	
+	
+	saveContent = async (e:any) => {
+		let ticket = this.props.children.ticket;
+		ticket.content = e.target.value;
+		ticket = await api.editTicket(ticket);
+		this.setState({
+			editContent: false,
+			ticket: ticket
+		});
+	}
+
 	render(){
 		const props = this.props.children;
 		const ticket = props.ticket;
+		const labels = ticket.labels;
 		const contentClass = props.seeMore ? 'content-more' : 'content-less';
 		const lessOrMore = props.seeMore ? 'less' : 'more';
 		return(
 			<li key={ticket.id} className='ticket'>
-				<a className='pin' onClick={() => {props.onClickPin(props.ticket.id)}}><img src={props.pin ? require('./icon/push-pin.svg') : require('./icon/paper-pin.svg') } /> </a>
-				<h5 className='title'>{ticket.title}</h5>
+				<a className='pin' onClick={() => {props.onClickPin(ticket.id)}}><img src={props.pin ? require('./icon/push-pin.svg') : require('./icon/paper-pin.svg') } /> </a>
+				{this.state.editTitle ? <input className='title-input' type='text' autoFocus defaultValue={ticket.title} onBlur={this.saveTitle}/> : <h5 className='title' onClick={this.onClickEditTitle}>{ticket.title}</h5>}
+				
 				<div>
-					<p className={contentClass}>{ticket.content}</p>
-					<a className={'see-more'} onClick={() => {props.onClickSeeMore(props.ticket.id)}}>{'See ' + lessOrMore}</a>
+					{this.state.editContent ? <textarea className='content-input' autoFocus defaultValue={ticket.content} onBlur={this.saveContent}/>: <p onClick={this.onClickEditContent} className={contentClass}>{ticket.content}</p>}
+					<a className={'see-more'} onClick={() => {props.onClickSeeMore(ticket.id)}}>{'See ' + lessOrMore}</a>
 				</div>
 				<footer>
+					{labels ? this.renderLabels(labels) : ''}
 					<div className='meta-data'>By {ticket.userEmail} | { new Date(ticket.creationTime).toLocaleString()}</div>
-					<a className='clone' onClick={() => {props.onClickClone(props.ticket.id)}}><img src={require('./icon/copy.svg')} /></a>
-					<a className='delete' onClick={() => {props.onClickDelete(props.ticket.id)}}><img src={require('./icon/delete.svg')} /></a>
+					<a className='hide' onClick={() => {props.onClickHide(ticket.id)}}><img src={require('./icon/restriction.svg')} /></a>
+					<a className='clone' onClick={() => {props.onClickClone(ticket.id)}}><img src={require('./icon/copy.svg')} /></a>
+					<a className='delete' onClick={() => {props.onClickDelete(ticket.id)}}><img src={require('./icon/delete.svg')} /></a>
 				</footer>
 			</li>
 		);
@@ -105,7 +154,8 @@ export class App extends React.PureComponent<{}, AppState> {
 						onClickPin: (id:string) => this.onClickPin(id),
 						onClickSeeMore: (id:string) => this.onClickSeeMore(id),
 						onClickClone: (id:string) => this.onClickClone(id),
-						onClickDelete: (id:string) => this.onClickDelete(id)
+						onClickDelete: (id:string) => this.onClickDelete(id),
+						onClickHide: (id:string) => this.onClickHide(id),
 					}
 				};
 				return <TicketView children={props.children}/>
@@ -145,6 +195,16 @@ export class App extends React.PureComponent<{}, AppState> {
 		let tickets = this.state.tickets.slice();
 		tickets.unshift(clone);
 		tickets = tickets.sort((t) => t.pin).slice(0, 20);
+		
+		this.setState({
+			tickets: tickets
+		});
+	}	
+	
+	onClickHide = async (id: string) => {
+		if (!this.state.tickets) return;
+
+		const tickets = this.state.tickets.filter((t) => { return t.ticket.id != id; });
 		
 		this.setState({
 			tickets: tickets
@@ -217,7 +277,7 @@ export class App extends React.PureComponent<{}, AppState> {
 					<header>
 						<input type="search" placeholder="Search..." onChange={(e) => this.onSearch(e.target.value)}/>
 					</header>
-					{tickets ? <div className='results'>Showing {tickets.length} results <i> ({numPins} pin tickets) <a onClick={() => {this.updateTicketsState()}}> restore</a></i></div> : null }
+					{tickets ? <div className='results'>Showing {tickets.length} results <i> ({numPins} pin, {20 - tickets.length} hide) <a onClick={() => {this.updateTicketsState()}}> restore</a></i></div> : null }
 						<a className='prev-page' onClick={()=>this.onClickChangePage(-1)}>🡠 prev page</a>
 						<a className='next-page'onClick={()=>this.onClickChangePage(1)}>next page 🡢</a>	
 						<p className='curr-page'>page {this.state.page}</p>
