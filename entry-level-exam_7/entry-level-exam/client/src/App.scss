@@ -176,7 +176,14 @@ body {
 					.clone{
 						position: absolute;
 						right: 10px;
-						bottom: 10px;
+						bottom: 5px;
+						font-size: medium;
+					}
+					.delete{
+						position: absolute;
+						right: 40px;
+						bottom: 5px;
+						font-size: large;
 					}
 				}
 			}
@@ -350,8 +357,16 @@ body {
 					.clone{
 						position: absolute;
 						right: 10px;
-						bottom: 10px;
+						bottom: 5px;
+						font-size: medium;
 					}
+					.delete{
+						position: absolute;
+						right: 40px;
+						bottom: 5px;
+						font-size: large;
+					}
+
 				}
 			}
 		}

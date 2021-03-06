@@ -13,6 +13,7 @@ export type Ticket = {
 export type ApiClient = {
     getTickets: (page: number) => Promise<{page: number,tickets:Ticket[]}>;
     cloneTicket: (id:string) => Promise<Ticket>;
+    deleteTicket: (id: string) => void;
 }
 
 export const createApiClient = (): ApiClient => {
@@ -22,6 +23,9 @@ export const createApiClient = (): ApiClient => {
         },
         cloneTicket: (id:string) => {
             return axios.post(APIRootPath + '/clone', { id: id }).then((res) => res.data);
-        }
+        },
+        deleteTicket: (id:string) => {
+            return axios.post(APIRootPath + '/delete', { id: id }).then((res) => res.data);
+        },
     }
 }

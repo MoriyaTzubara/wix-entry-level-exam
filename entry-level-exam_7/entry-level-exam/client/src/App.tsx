@@ -27,6 +27,7 @@ type TicketViewProps = {
 		onClickPin: Function,
 		onClickSeeMore: Function,
 		onClickClone: Function,
+		onClickDelete: Function
 	}
 }
 
@@ -37,11 +38,9 @@ export class TicketView extends Component<TicketViewProps>{
 		const ticket = props.ticket;
 		const contentClass = props.seeMore ? 'content-more' : 'content-less';
 		const lessOrMore = props.seeMore ? 'less' : 'more';
-		const pinOrUnpin = props.pin ? '📌' : 'pin';
-
 		return(
 			<li key={ticket.id} className='ticket'>
-				<a className='pin' onClick={() => {props.onClickPin(props.ticket.id)}}>{pinOrUnpin}</a>
+				<a className='pin' onClick={() => {props.onClickPin(props.ticket.id)}}><img src={props.pin ? require('./icon/push-pin.svg') : require('./icon/paper-pin.svg') } /> </a>
 				<h5 className='title'>{ticket.title}</h5>
 				<div>
 					<p className={contentClass}>{ticket.content}</p>
@@ -49,7 +48,8 @@ export class TicketView extends Component<TicketViewProps>{
 				</div>
 				<footer>
 					<div className='meta-data'>By {ticket.userEmail} | { new Date(ticket.creationTime).toLocaleString()}</div>
-					<a className='clone' onClick={() => {props.onClickClone(props.ticket.id)}}>clone</a>
+					<a className='clone' onClick={() => {props.onClickClone(props.ticket.id)}}><img src={require('./icon/copy.svg')} /></a>
+					<a className='delete' onClick={() => {props.onClickDelete(props.ticket.id)}}><img src={require('./icon/delete.svg')} /></a>
 				</footer>
 			</li>
 		);
@@ -104,7 +104,8 @@ export class App extends React.PureComponent<{}, AppState> {
 						pin: ticket.pin,
 						onClickPin: (id:string) => this.onClickPin(id),
 						onClickSeeMore: (id:string) => this.onClickSeeMore(id),
-						onClickClone: (ticketId:string) => this.onClickClone(ticketId)
+						onClickClone: (id:string) => this.onClickClone(id),
+						onClickDelete: (id:string) => this.onClickDelete(id)
 					}
 				};
 				return <TicketView children={props.children}/>
@@ -122,10 +123,15 @@ export class App extends React.PureComponent<{}, AppState> {
 		}, 300);
 	}
 
-	onClickClone = async (ticketId: string) => {
+	onClickDelete = async(id: string) => {
+		await api.deleteTicket(id);
+		this.updateTicketsState();
+	}
+
+	onClickClone = async (id: string) => {
 		if (!this.state.tickets) return;
 
-		const ticket = this.state.tickets.find((t) => { return t.ticket.id == ticketId; });
+		const ticket = this.state.tickets.find((t) => { return t.ticket.id == id; });
 		
 		if (!ticket) return;
 		

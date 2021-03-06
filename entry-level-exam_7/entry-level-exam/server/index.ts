@@ -35,8 +35,8 @@ app.get(APIPath, (req, res) => {
 });
 
 app.post(APIPath + '/clone', (req, res) => {
-  const ticketId = req.body.id;
-  const ticket = tempData.find((t:Ticket) => { return t.id == ticketId});
+  const id = req.body.id;
+  const ticket = tempData.find((t:Ticket) => { return t.id == id});
   if (!ticket) return;
   
   // Clone the ticket
@@ -46,10 +46,20 @@ app.post(APIPath + '/clone', (req, res) => {
   clone.id = idForInitialization.toString();
 
   tempData.push(clone);
-  
+
   res.send(clone);
+});
+
+app.post(APIPath + '/delete', (req, res) => {
+  const id = req.body.id;
+  const i = tempData.findIndex((t:Ticket) => { return t.id == id});
+  
+  if (i == -1) return;
+
+  // Delete the ticket
+  tempData.splice(i, 1);
+  res.send();
 });
 
 app.listen(serverAPIPort);
 console.log('server running', serverAPIPort)
-
