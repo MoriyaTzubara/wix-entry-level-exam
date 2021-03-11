@@ -53,9 +53,9 @@ use "dark mode" and "light mode" as the text for those different button states.
 2a. 
  It's pretty common that we need to clone tickets in our system.
 
-1.Add a clone button or text that will replicate an item in the client.
-2.Add a clone method in the API and server and add an in memory item to the collection
-3.Connect your client side "clone" button to that API call
+1. Add a clone button or text that will replicate an item in the client.
+2. Add a clone method in the API and server and add an in memory item to the collection
+3. Connect your client side "clone" button to that API call
 
 
 2b. We're showing only 20 tickets but agents can swear there are more. Solve this problem.  
