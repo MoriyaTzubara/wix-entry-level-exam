@@ -1,470 +1,277 @@
 :root {
-	--color1: #10002B;
-	--color2: #240046;
-	--color3: #3C096C;
-	--color4: #5A189A;
-	--color5: #7B2CBF;
-	--color6: #9D4EDD;
-	--color7: #E3CCF1;
-	--color8: #F9EDFF;
-	--color9: #f8effd;
+  --color1: #10002b;
+  --color2: #240046;
+  --color3: #3c096c;
+  --color4: #5a189a;
+  --color5: #7b2cbf;
+  --color6: #9d4edd;
+  --color7: #e3ccf1;
+  --color8: #f9edff;
+  --color9: #f8effd;
+
+  --background-color: var(--color8);
+  --link-color: var(--color6);
+
+  --content-color: black;
+  --title-color: black;
+
+  --button-background-color: var(--color1);
+  --button-color: white;
+
+  --label-background-color: var(--color7);
+  --label-color: var(--color6);
+
+  --ticket-background-color: white;
+
+  --search-background-color: white;
+
+  --shadow-color: var(--color7);
 }
 
-body {	
-	margin: 0;
-	
-	input {
-		background: none;
-		border: solid 0.5px;
-	}
+.dark-theme {
+  --background-color: var(--color1);
+  --link-color: var(--color6);
 
-	.light-theme {
-		font-family: 'Open Sans', sans-serif;
-		background-color: var(--color8);
-		padding-top: 100px;
-		padding: 50px;	
-		color: var(--color1);
-		min-height: 100vh;
+  --content-color: var(--color7);
+  --title-color: var(--color8);
 
-		.title-input {
-			font-size: 15px;
-			width: 90%;
-			height: 30px;
-			font-family: 'Open Sans', sans-serif;
-		}
-		.content-input {
-			background: none;
-			height: 100%;
-			min-height: 150px;
-			width: 100%;
-			font-family: 'Open Sans', sans-serif;
-			color: var(--text-color);
-			font-size: 13px;
-			font-weight: 300;
-		}
+  --button-background-color: white;
+  --button-color: var(--color1);
 
-		main {
-			max-width: 1000px;
-			margin: 0 auto;
-		}
-	
-		h1 {
-			font-weight: 300;
-		}
-	
-		.results {
-			color: var(--color1);
-			font-size: 12px;
-			margin: 12px 5px;
-		}
-	
-		header {
-			width: 100%;
-			flex-shrink: 0;
-			border-radius: 6px;
-			background-color: white;
-			box-shadow: 0 2px 6px 1px #e1e5e8;
-			margin-bottom: 14px;
-			display: flex;
-			flex-direction: column;
-			border: 1px solid white;
-			padding: 10px 20px;
-			position: relative;
-	
-			input {
-				width: 100%;
-				text-overflow: ellipsis;
-				display: inline-block;
-				color: var(--text-color);
-				font-size: 14px;
-				outline: 0;
-				transition: border .1s ease;
-				resize: none;
-				border: none;
-	
-				&::placeholder  {
-					color: #b6c1cd;
-				}
-			}
-		}
-	
-		a {
-			color: var(--color6);
-			cursor: pointer;
-			font-weight: 500;
-			font-size: 12px;
-		}
-		
-		.next-page {
-			position: absolute;
-			right: 100px;
-			margin: 5px;
-		}
-		.prev-page {
-			position: absolute;
-			left: 100px;
-		}
-		.curr-page {
-			text-align: center;
-			font-size: 11px;
-		}
-	
-	
-		.mode-btn {
-			color: white;
-			background-color: var(--color1);
-			padding: 8px 20px 8px 20px;
-			border-radius: 20px;
-			font-size: medium;
-			margin: 7px;
-			position: absolute;
-			right: 35px;
-			top: 35px;
-		}
-	
-		.tickets {
-	
-			margin: 0;
-			padding: 0;
-	
-			.ticket {
-				height: max-content;
-				min-height: 150px;
-				width: calc(50% - 70px);
-				margin: 15px;
-				display: inline-block;
-				padding: 10px 20px;
-				position: relative;
-				background-color: white;
-				box-shadow: 0 2px 6px 1px #e1e5e8;
-	
-				&:hover {
-					box-shadow: 0 2px 6px 1px #d3d7da;
-				}
-	
-				.title {
-					cursor: pointer;
-					margin: 10px 0;
-					margin-right: 40px;
-					font-size: 15px;
-					font-weight: 400;
-					font-style: normal;
-					color: var(--color2);
-					overflow: auto;
-				}
-	
-				.content-less {
-					cursor: pointer;
-					font-size: 13px;
-					font-weight: 300;
-	
-					overflow: hidden;
-					height: 55px;
-					display: block;
-					position: relative;
-					margin: 0px;
-				}
-				.content-more {
-					cursor: pointer;
-					font-size: 13px;
-					font-weight: 300;
-	
-					overflow: visible;
-					height: max-content;
-					display: block;
-					position: relative;
-					margin: 0px;
-					white-space: pre-wrap;
-					overflow-wrap: break-word;
-				}
-				
-				.see-more {
-					position: relative;
-					top: 0px;
-				}
-	
-				.pin {
-					position: absolute;
-					right: 10px;
-					top: 10px;
-				}
-	
-				footer {
-					justify-content: space-between;
-					bottom: 0px;
-					
-					.meta-data {
-						color: var(--color1);
-						font-size: 10px;
-						margin: 10px 0;
-						flex-shrink: 0;
-					}
+  --label-background-color: var(--color3);
+  --label-color: var(--color6);
 
-					.labels {
-						font-size: 10px;
-						height: 20px;
-						
-						.label {
-							background-color: var(--color7);
-							color: var(--color6);
-							height: 15px;
-							margin: 5px;
-							padding: 2px 7px 2px 7px;
-							display: inline;
-							border-radius: 20px;
-							float: right;
-						}
-					}
-					
-					.clone {
-						position: absolute;
-						right: 10px;
-						bottom: 5px;
-						font-size: medium;
-					}
-					.delete {
-						position: absolute;
-						right: 40px;
-						bottom: 5px;
-						font-size: large;
-					}
-					.hide {
-						position: absolute;
-						right: 70px;
-						bottom: 5px;
-						font-size: medium;
-					}
-				}
-			}
-		}
-	
-	}
+  --ticket-background-color: var(--color2);
 
-	.dark-theme {
-		font-family: 'Open Sans', sans-serif;
-		background-color: var(--color1);
-		padding-top: 100px;
-		padding: 50px;	
-		color: var(--color7);
-		min-height: 100vh;
+  --search-background-color: var(--color3);
 
-		.title-input {
-			font-size: 15px;
-			width: 90%;
-			height: 30px;
-			color: white;
-			font-family: 'Open Sans', sans-serif;
-		}
+  --shadow-color: var(--color3);
+}
 
-		.content-input {
-			background: none;
-			height: 100%;
-			min-height: 150px;
-			width: 100%;
-			font-family: 'Open Sans', sans-serif;
-			color: var(--text-color);
-			font-size: 13px;
-			font-weight: 300;
-		}
+body {
+  margin: 0;
+}
 
-		main {
-			max-width: 1000px;
-			margin: 0 auto;
-		}
-	
-		h1 {
-			font-weight: 300;
-		}
-	
-		.results {
-			color: var(--text-color);
-			font-size: 12px;
-			margin: 12px 5px;
-		}
-	
-		header {
-			width: 100%;
-			flex-shrink: 0;
-			border-radius: 6px;
-			background-color: var(--color3);
-			box-shadow: 0 2px 6px 1px var(--color3);
-			margin-bottom: 14px;
-			display: flex;
-			flex-direction: column;
-			border: 1px solid var(--color3);
-			padding: 10px 20px;
-			position: relative;
-	
-			input {
-				width: 100%;
-				text-overflow: ellipsis;
-				display: inline-block;
-				color: var(--color6);
-				background-color: var(--color3);
-				font-size: 14px;
-				outline: 0;
-				transition: border .1s ease;
-				resize: none;
-				border: none;
-	
-				&::placeholder  {
-					color: var(--color4);
-				}
-			}
-		}
-	
-		a {
-			color: var(--color6);
-			cursor: pointer;
-			font-weight: 500;
-			font-size: 12px;
-		}
+main {
+  font-family: "Open Sans", sans-serif;
+  background-color: var(--background-color);
+  padding-top: 100px;
+  padding: 50px;
+  color: var(--content-color);
+  min-height: 100vh;
 
-		.next-page {
-			position: absolute;
-			right: 100px;
-			margin: 5px;
-		}
-		.prev-page {
-			position: absolute;
-			left: 100px;
-		}
-		.curr-page {
-			text-align: center;
-			font-size: 11px;
-		}
-		
-		.mode-btn {
-			color: var(--color1);
-			background-color: var(--color8);
-			padding: 8px 20px 8px 20px;
-			border-radius: 20px;
-			font-size: medium;
-			margin: 7px;
-			position: absolute;
-			right: 35px;
-			top: 35px;
-		}
-	
-		.tickets {
-	
-			margin: 0;
-			padding: 0;
-	
-			.ticket {
-				height: max-content;
-				min-height: 150px;
-				width: calc(50% - 70px);
-				margin: 15px;
-				display: inline-block;
-				padding: 10px 20px;
-				position: relative;
-				box-shadow: 0 2px 6px 1px var(--color2);
-				background-color: var(--color2);
-				
-				&:hover {
-					box-shadow: 0 2px 6px 1px var(--color3);
-				}
-	
-				.title {
-					cursor: pointer;
-					margin: 10px 0;
-					margin-right: 40px;
-					font-size: 15px;
-					font-weight: 400;
-					font-style: normal;
-					color: var(--color8);
-					overflow: auto;
-				}
-	
-				.content-less {
-					cursor: pointer;
-					color: var(--text-color);
-					font-size: 13px;
-					font-weight: 300;
-	
-					overflow: hidden;
-					height: 55px;
-					display: block;
-					position: relative;
-					margin: 0px;
-				}
+  input {
+    background: none;
+    border: solid 0.5px;
+  }
 
-				.content-more {
-					cursor: pointer;
-					color: var(--text-color);
-					font-size: 13px;
-					font-weight: 300;
-					overflow: visible;
-					height: max-content;
-					display: block;
-					position: relative;
-					margin: 0px;
-					white-space: pre-wrap;
-					overflow-wrap: break-word;
-				}
-				
-				.see-more {
-					position: relative;
-					top: 0px;
-				}
-	
-				.pin {
-					position: absolute;
-					right: 10px;
-					top: 10px;
-				}
-	
-				footer {
-					justify-content: space-between;
-					bottom: 0;
-					
-					.meta-data {
-						color: var(--text-color);
-						font-size: 10px;
-						margin: 10px 0;
-						flex-shrink: 0;
-					}
-					
-					.labels {
-						font-size: 10px;
-						height: 20px;
-						
-						.label {
-							background-color: var(--color3);
-							color: var(--color6);
-							height: 15px;
-							margin: 5px;
-							padding: 2px 7px 2px 7px;
-							display: inline;
-							border-radius: 20px;
-							float: right;
-						}
-					}
+  .title-input {
+    font-size: 15px;
+    width: 90%;
+    height: 30px;
+    font-family: "Open Sans", sans-serif;
+  }
 
-					.clone {
-						position: absolute;
-						right: 10px;
-						bottom: 5px;
-						font-size: medium;
-					}
-					.delete {
-						position: absolute;
-						right: 40px;
-						bottom: 5px;
-						font-size: large;
-					}
-					.hide {
-						position: absolute;
-						right: 70px;
-						bottom: 5px;
-						font-size: medium;
-					}
+  .content-input {
+    background: none;
+    height: 100%;
+    min-height: 150px;
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    color: var(--text-color);
+    font-size: 13px;
+    font-weight: 300;
+  }
 
-				}
-			}
-		}
-	
-	}
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
 
+  h1 {
+    font-weight: 300;
+  }
+
+  .results {
+    font-size: 12px;
+    margin: 12px 5px;
+  }
+
+  header {
+    width: 100%;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background-color: var(--search-background-color);
+    box-shadow: 0 2px 6px 1px var(--shadow-color);
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    position: relative;
+
+    input {
+      width: 100%;
+      text-overflow: ellipsis;
+      display: inline-block;
+      color: var(--text-color);
+      font-size: 14px;
+      outline: 0;
+      transition: border 0.1s ease;
+      resize: none;
+      border: none;
+
+      &::placeholder {
+        color: #b6c1cd;
+      }
+    }
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .next-page {
+    position: absolute;
+    right: 100px;
+    margin: 5px;
+  }
+
+  .prev-page {
+    position: absolute;
+    left: 100px;
+  }
+
+  .curr-page {
+    text-align: center;
+    font-size: 11px;
+  }
+
+  .mode-btn {
+    color: var(--button-color);
+    background-color: var(--button-background-color);
+    padding: 8px 20px 8px 20px;
+    border-radius: 20px;
+    font-size: medium;
+    margin: 7px;
+    position: absolute;
+    right: 35px;
+    top: 35px;
+  }
+
+  .tickets {
+    margin: 0;
+    padding: 0;
+
+    .ticket {
+      height: max-content;
+      min-height: 150px;
+      width: calc(50% - 70px);
+      margin: 15px;
+      display: inline-block;
+      padding: 10px 20px;
+      position: relative;
+      background-color: var(--ticket-background-color);
+      box-shadow: 0 2px 6px 1px var(--shadow-color);
+
+      &:hover {
+        box-shadow: 0 2px 6px 1px var(--shadow-color);
+      }
+
+      .title {
+        cursor: pointer;
+        margin: 10px 0;
+        margin-right: 40px;
+        font-size: 15px;
+        font-weight: 400;
+        font-style: normal;
+        color: var(--title-color);
+        overflow: auto;
+      }
+
+      .content-less {
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 300;
+
+        overflow: hidden;
+        height: 55px;
+        display: block;
+        position: relative;
+        margin: 0px;
+      }
+      .content-more {
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 300;
+
+        overflow: visible;
+        height: max-content;
+        display: block;
+        position: relative;
+        margin: 0px;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+      }
+
+      .see-more {
+        position: relative;
+        top: 0px;
+      }
+
+      .pin {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+
+      footer {
+        justify-content: space-between;
+        bottom: 0px;
+
+        .meta-data {
+          font-size: 10px;
+          margin: 10px 0;
+          flex-shrink: 0;
+        }
+
+        .labels {
+          font-size: 10px;
+          height: 20px;
+
+          .label {
+            background-color: var(--label-background-color);
+            color: var(--label-color);
+            height: 15px;
+            margin: 5px;
+            padding: 2px 7px 2px 7px;
+            display: inline;
+            border-radius: 20px;
+            float: right;
+          }
+        }
+
+        .clone {
+          position: absolute;
+          right: 10px;
+          bottom: 5px;
+          font-size: medium;
+        }
+        .delete {
+          position: absolute;
+          right: 40px;
+          bottom: 5px;
+          font-size: large;
+        }
+        .hide {
+          position: absolute;
+          right: 70px;
+          bottom: 5px;
+          font-size: medium;
+        }
+      }
+    }
+  }
 }
