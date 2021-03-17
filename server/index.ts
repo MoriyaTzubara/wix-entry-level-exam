@@ -1,10 +1,10 @@
-import express from 'express';
-import bodyParser = require('body-parser');
-import { tempData } from './temp-data';
-import { serverAPIPort, APIPath } from '@fed-exam/config';
-import { Ticket } from '../client/src/api';
+import express from "express";
+import bodyParser = require("body-parser");
+import { tempData } from "./temp-data";
+import { serverAPIPort, APIPath } from "@fed-exam/config";
+import { Ticket } from "../client/src/api";
 
-console.log('starting server', { serverAPIPort, APIPath });
+console.log("starting server", { serverAPIPort, APIPath });
 
 const app = express();
 
@@ -15,33 +15,36 @@ let idForInitialization = 0;
 app.use(bodyParser.json());
 
 app.use((_, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', '*');
-  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
   next();
 });
 
-app.get(APIPath, (req, res) => {
-
+app.get(`${APIPath}/:page`, (req, res) => {
   // @ts-ignore
-  let page: number = req.query.page || 1;
+  let page: number = req.params.page || 1;
 
-  if ((page < 1) || (page > tempData.length / PAGE_SIZE))
-    page = 1
+  if (page < 1 || page > tempData.length / PAGE_SIZE) page = 1;
 
-  const paginatedData = tempData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const paginatedData = tempData.slice(
+    (page - 1) * PAGE_SIZE,
+    page * PAGE_SIZE
+  );
 
-  res.send({page: page, tickets: paginatedData});
+  res.send({ page: page, tickets: paginatedData });
 });
 
-app.post(APIPath + '/clone', (req, res) => {
+app.post(`${APIPath}/clone`, (req, res) => {
   const id = req.body.id;
-  const ticket = tempData.find((t:Ticket) => { return t.id == id});
+  const ticket = tempData.find((t: Ticket) => {
+    return t.id == id;
+  });
   if (!ticket) return;
-  
+
   // Clone the ticket
-  const clone:Ticket = JSON.parse(JSON.stringify(ticket))
-  
+  const clone: Ticket = JSON.parse(JSON.stringify(ticket));
+
   idForInitialization += 1;
   clone.id = idForInitialization.toString();
 
@@ -50,10 +53,12 @@ app.post(APIPath + '/clone', (req, res) => {
   res.send(clone);
 });
 
-app.post(APIPath + '/delete', (req, res) => {
-  const id = req.body.id;
-  const i = tempData.findIndex((t:Ticket) => { return t.id == id});
-  
+app.delete(`${APIPath}/:id`, (req, res) => {
+  const id = req.params.id;
+  const i = tempData.findIndex((t: Ticket) => {
+    return t.id == id;
+  });
+
   if (i == -1) return;
 
   // Delete the ticket
@@ -61,10 +66,12 @@ app.post(APIPath + '/delete', (req, res) => {
   res.send();
 });
 
-app.post(APIPath + '/edit', (req, res) => {
+app.put(APIPath, (req, res) => {
   const ticket = req.body.ticket;
-  const i = tempData.findIndex((t:Ticket) => { return t.id == ticket.id});
-  
+  const i = tempData.findIndex((t: Ticket) => {
+    return t.id == ticket.id;
+  });
+
   if (i == -1) return;
 
   // Edit the ticket
@@ -73,9 +80,9 @@ app.post(APIPath + '/edit', (req, res) => {
   tempData[i].labels = ticket.labels;
   tempData[i].content = ticket.content;
   tempData[i].userEmail = ticket.userEmail;
-  
+
   res.send(tempData[i]);
 });
 
 app.listen(serverAPIPort);
-console.log('server running', serverAPIPort)
+console.log("server running", serverAPIPort);
