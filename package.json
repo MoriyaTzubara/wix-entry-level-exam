@@ -14,5 +14,9 @@
   "license": "ISC",
   "devDependencies": {
     "lerna": "^3.13.1"
+  },
+  "dependencies": {
+    "@types/joi": "^17.2.3",
+    "joi": "^17.4.0"
   }
 }

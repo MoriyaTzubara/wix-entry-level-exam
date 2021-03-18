@@ -3,8 +3,11 @@ import bodyParser = require("body-parser");
 import { tempData } from "./temp-data";
 import { serverAPIPort, APIPath } from "@fed-exam/config";
 import { Ticket } from "../client/src/api";
+import { validateTicket, validateTicketId } from "./validation";
 
 console.log("starting server", { serverAPIPort, APIPath });
+
+const NOT_FOUNT_MESSAGE = "The ticket with the given ID was not found.";
 
 const app = express();
 
@@ -36,13 +39,9 @@ app.get(`${APIPath}/:page`, (req, res) => {
 });
 
 app.post(`${APIPath}/clone`, (req, res) => {
-  const id = req.body.id;
-  const ticket = tempData.find((t: Ticket) => {
-    return t.id == id;
-  });
-  if (!ticket) return;
+  const ticket = validateTicketId(req.body.id);
+  if (!ticket) return res.status(404).send(NOT_FOUNT_MESSAGE);
 
-  // Clone the ticket
   const clone: Ticket = JSON.parse(JSON.stringify(ticket));
 
   idForInitialization += 1;
@@ -54,27 +53,27 @@ app.post(`${APIPath}/clone`, (req, res) => {
 });
 
 app.delete(`${APIPath}/:id`, (req, res) => {
-  const id = req.params.id;
-  const i = tempData.findIndex((t: Ticket) => {
-    return t.id == id;
-  });
+  const ticket = validateTicketId(req.params.id);
+  if (!ticket) return res.status(404).send(NOT_FOUNT_MESSAGE);
 
-  if (i == -1) return;
+  const i = tempData.findIndex((t) => t.id === req.params.id);
 
   // Delete the ticket
   tempData.splice(i, 1);
-  res.send();
+  res.send(ticket);
 });
 
 app.put(APIPath, (req, res) => {
-  const ticket = req.body.ticket;
-  const i = tempData.findIndex((t: Ticket) => {
-    return t.id == ticket.id;
-  });
+  const { ticket } = req.body;
 
-  if (i == -1) return;
+  const error = validateTicket(ticket);
+  if (error) return res.status(400).send(error.message);
 
-  // Edit the ticket
+  if (!validateTicketId(ticket.id))
+    return res.status(404).send(NOT_FOUNT_MESSAGE);
+
+  const i = tempData.findIndex((t) => t.id === ticket.id);
+
   tempData[i].title = ticket.title;
   tempData[i].creationTime = ticket.creationTime;
   tempData[i].labels = ticket.labels;
